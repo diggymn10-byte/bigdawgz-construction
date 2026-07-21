@@ -82,7 +82,11 @@
   <div class="wrap">
     <div class="crumbs"><a href="index.html">Home</a> / Contact</div>
     <h1>Get a Free Estimate - Contact Big Dawgz Today</h1>
-    <p>Storm damage, an aging roof, or siding that's seen better days, we're ready to take a look. Reach out any way that's easy for you and we'll get back to you the same day.</p>
+    <p>Storm damage, an aging roof, a remodel, or a new build, we're ready to take a look. Reach out any way that's easy for you and we'll get back to you the same day.</p>
+    <div class="hero-actions">
+      <a href="tel:8445693294" class="btn btn-primary"><svg class="ic"><use href="#i-phone"/></svg> Call 844-569-DAWG</a>
+      <a href="#leadForm" class="btn btn-outline"><svg class="ic"><use href="#i-search"/></svg> Request A Free Inspection</a>
+    </div>
   </div>
 </section>
 
@@ -133,58 +137,123 @@
       </div>
 
       <div>
-        <form class="lead-form" onsubmit="event.preventDefault(); document.getElementById('formMsg').style.display='block'; this.reset();">
+        <!-- LEAD FORM — submissions POST to Web3Forms (works on a static site, no server needed).
+             TO GO LIVE: 1) visit https://web3forms.com, enter the Big Dawgz email address, copy the free Access Key.
+                         2) paste that key into the value of the hidden "access_key" input below (replacing the placeholder).
+             Until a real key is set, a submission FAILS and the visitor sees the "call us" error — it never shows a false success. -->
+        <form class="lead-form" id="leadForm">
           <h3>Request Your Free Inspection</h3>
           <p class="sub">We'll get back to you the same day.</p>
+
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+          <input type="hidden" name="subject" value="New inspection request from bigdawgzconstruction.com">
+          <input type="hidden" name="from_name" value="Big Dawgz Website">
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none !important" aria-hidden="true">
 
           <div class="row2">
             <div class="field">
               <label for="fname">First Name</label>
-              <input type="text" id="fname" name="fname" required>
+              <input type="text" id="fname" name="First Name" required autocomplete="given-name">
             </div>
             <div class="field">
               <label for="lname">Last Name</label>
-              <input type="text" id="lname" name="lname" required>
+              <input type="text" id="lname" name="Last Name" required autocomplete="family-name">
             </div>
           </div>
 
           <div class="row2">
             <div class="field">
               <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" required>
+              <input type="tel" id="phone" name="Phone" required autocomplete="tel">
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input type="email" id="email" name="email">
+              <input type="email" id="email" name="Email" autocomplete="email">
             </div>
           </div>
 
           <div class="field">
             <label for="address">Property Address</label>
-            <input type="text" id="address" name="address">
+            <input type="text" id="address" name="Property Address" autocomplete="street-address">
           </div>
 
           <div class="field">
             <label for="need">What Do You Need?</label>
-            <select id="need" name="need">
+            <select id="need" name="Service Needed">
               <option>Storm / hail damage inspection</option>
-              <option>Roof repair</option>
-              <option>Roof replacement</option>
+              <option>Roof repair or replacement</option>
               <option>Siding repair or replacement</option>
-              <option>Insurance claim help</option>
+              <option>Home improvement or remodel (kitchen, bath, etc.)</option>
+              <option>New utility building (shop, shed, barn)</option>
+              <option>Insurance claim / storm documentation</option>
               <option>Something else</option>
             </select>
           </div>
 
           <div class="field">
             <label for="details">Tell Us What Happened</label>
-            <textarea id="details" name="details" rows="4"></textarea>
+            <textarea id="details" name="Message" rows="4"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Request Free Inspection</button>
+          <button type="submit" class="btn btn-primary" id="leadSubmit">Request Free Inspection</button>
 
-          <p class="form-note" id="formMsg" style="display:none">Thanks, that's in. This is a demo form for now, once it's wired up your request will go straight to our team so we can call you back the same day.</p>
+          <p class="form-note" id="formMsg" style="display:none;color:#1a7d3c;font-weight:600">Thank you. Your request is on its way to our team and we'll call you back the same day.</p>
+          <p class="form-note" id="formErr" style="display:none;color:#c0392b;font-weight:600">Sorry, we couldn't send your request just now. Please call us at <a href="tel:8445693294" style="color:#c0392b;text-decoration:underline">844-569-DAWG</a> and we'll take care of you.</p>
         </form>
+
+        <script>
+        (function(){
+          var form = document.getElementById('leadForm');
+          if(!form) return;
+          var btn = document.getElementById('leadSubmit');
+          var okMsg = document.getElementById('formMsg');
+          var errMsg = document.getElementById('formErr');
+          var phone = document.getElementById('phone');
+          // clear custom validity as the user types so the message doesn't get stuck
+          phone.addEventListener('input', function(){ phone.setCustomValidity(''); });
+
+          form.addEventListener('submit', function(e){
+            e.preventDefault();
+            okMsg.style.display = 'none';
+            errMsg.style.display = 'none';
+
+            // FR-9: block submission on missing/invalid fields and show which one to fix
+            if(!form.checkValidity()){ form.reportValidity(); return; }
+            var digits = phone.value.replace(/\D/g, '');
+            if(digits.length < 10){
+              phone.setCustomValidity('Please enter a valid phone number (at least 10 digits).');
+              form.reportValidity();
+              return;
+            }
+            phone.setCustomValidity('');
+
+            // loading state + double-submit prevention
+            var original = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: { 'Accept': 'application/json' },
+              body: new FormData(form)
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+              if(data && data.success){
+                okMsg.style.display = 'block';          // FR-8 success reflects real delivery
+                form.reset();
+              } else {
+                errMsg.style.display = 'block';         // FR-10 real failure, no false success
+              }
+            })
+            .catch(function(){ errMsg.style.display = 'block'; })
+            .finally(function(){
+              btn.disabled = false;
+              btn.textContent = original;
+            });
+          });
+        })();
+        </script>
       </div>
     </div>
   </div>
