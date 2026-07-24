@@ -142,6 +142,12 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .page-hero h1,.page-hero h2,
 .cta-band h1,.cta-band h2,.cta-band h3{color:var(--orange)}
 
+/* ---------- display font: punchier headings ---------- */
+.home-hero h1,.page-hero h1,.h-xl,.h-lg,.cta-band h1,.cta-band h2,.float-badge b,.stat b{
+  font-family:'Anton','Oswald',sans-serif;font-weight:400;letter-spacing:.6px;
+}
+.home-hero h1{letter-spacing:.8px}
+
 /* ---------- home hero ---------- */
 .home-hero{
   position:relative;min-height:660px;display:flex;align-items:center;color:#fff;
