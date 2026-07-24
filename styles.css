@@ -263,6 +263,16 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .gal-item .cap small{display:block;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;color:#cfd3da;font-size:13px;font-weight:400}
 .gal-wide{grid-column:span 2}
 
+/* ---------- before / after pair ---------- */
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:50px}
+.ba-figure{position:relative;border-radius:var(--radius);overflow:hidden;height:380px;margin:0}
+.ba-figure img{width:100%;height:100%;object-fit:cover;display:block}
+.ba-tag{position:absolute;top:14px;left:14px;background:var(--charcoal);color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;font-weight:600;padding:6px 14px;border-radius:4px}
+.ba-tag.is-after{background:var(--orange)}
+.ba-caption{text-align:center;margin-top:22px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:18px;color:var(--charcoal)}
+.ba-caption small{display:block;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;color:var(--slate);font-size:14.5px;font-weight:400;margin-top:6px}
+@media(max-width:620px){.ba-pair{grid-template-columns:1fr}.ba-figure{height:300px}}
+
 /* ---------- testimonials ---------- */
 .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .tst{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:34px 30px;box-shadow:var(--shadow-sm)}
