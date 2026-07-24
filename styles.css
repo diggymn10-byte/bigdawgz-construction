@@ -33,7 +33,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3,h4,h5,.display{
-  font-family:'Oswald',sans-serif;
+  font-family:'Fjalla One','Oswald',sans-serif;
   text-transform:uppercase;
   line-height:1.08;
   letter-spacing:.4px;
@@ -144,9 +144,9 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 
 /* ---------- display font: punchier headings ---------- */
 .home-hero h1,.page-hero h1,.h-xl,.h-lg,.cta-band h1,.cta-band h2,.float-badge b,.stat b{
-  font-family:'Anton','Oswald',sans-serif;font-weight:400;letter-spacing:.6px;
+  font-family:'Fjalla One','Oswald',sans-serif;font-weight:400;letter-spacing:.3px;
 }
-.home-hero h1{letter-spacing:.8px}
+.home-hero h1{letter-spacing:.4px}
 
 /* ---------- home hero ---------- */
 .home-hero{
