@@ -81,6 +81,7 @@
     });}
     else if(k==='menu'){bot("No problem — what else can I help with?",showMenu);}
     else if(k==='leave'){mode='ask_name';bot("Great! What's your name?");}
+    else if(k==='callnow'){try{window.location.href='tel:8445693294';}catch(e){} bot("Give us a call at 844-569-DAWG and we'll take care of you. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});}
   }
   function submitLead(){
     // TODO: deliver lead to Big Dawgz. Wire to the same destination as the contact form (Web3Forms key) at launch.
@@ -89,7 +90,7 @@
   function freeText(text){
     if(mode==='ask_name'){lead.name=text;mode='ask_phone';bot("Thanks "+text+"! And the best phone number to reach you?");return;}
     if(mode==='ask_phone'){lead.phone=text;mode='done';submitLead();bot("Perfect — someone from Big Dawgz will reach out to you soon. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});return;}
-    bot("Good question — let me have someone from the team reach out with the details. What's your name?",function(){mode='ask_name';});
+    bot("Good question! Let me connect you with the team so you get the right answer. Want a callback, or call us now?",function(){quick([{k:'leave',label:'Leave my number'},{k:'callnow',label:'Call 844-569-DAWG'}]);});
   }
   function onSend(){var v=input.value.trim();if(!v)return;input.value='';user(v);freeText(v);}
   send.onclick=onSend;
