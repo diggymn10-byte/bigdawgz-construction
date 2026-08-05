@@ -26,7 +26,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-family:'Bitter',Georgia,serif;
   color:var(--ink);
   line-height:1.65;
   background:var(--white);
@@ -111,8 +111,8 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .brand img{height:48px;width:auto}
 .main-nav ul{display:flex;gap:30px;align-items:center}
 .main-nav a{
-  font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:500;
-  letter-spacing:.5px;font-size:15px;color:var(--charcoal);padding:6px 0;position:relative;transition:.18s;
+  font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;white-space:nowrap;
+  letter-spacing:.4px;font-size:16px;color:var(--charcoal);padding:6px 0;position:relative;transition:.18s;
 }
 .main-nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--orange);transition:.2s}
 .main-nav a:hover,.main-nav a.active{color:var(--orange)}
@@ -120,7 +120,7 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .header-cta{display:flex;align-items:center;gap:18px}
 .header-phone{display:flex;align-items:center;gap:11px}
 .header-phone .ic{width:34px;height:34px;color:var(--orange);stroke-width:1.6}
-.header-phone b{font-family:'Oswald',sans-serif;font-weight:700;font-size:20px;color:var(--charcoal);letter-spacing:.5px;display:block;line-height:1.1}
+.header-phone b{font-family:'Oswald',sans-serif;font-weight:700;font-size:20px;color:var(--charcoal);letter-spacing:.5px;display:block;line-height:1.1;white-space:nowrap}
 .header-phone small{font-size:11px;color:var(--slate);letter-spacing:.5px}
 .menu-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
 .menu-toggle span{width:26px;height:3px;background:var(--charcoal);border-radius:2px;transition:.2s}
@@ -161,7 +161,7 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
   font-weight:600;padding:9px 16px;border-radius:4px;margin-bottom:24px;
 }
 .tag-pill .ic{width:16px;height:16px;stroke-width:2.2}
-.home-hero h1{font-size:clamp(38px,5.3vw,64px);font-weight:700;margin-bottom:22px}
+.home-hero h1{font-size:clamp(38px,5.3vw,60px);font-weight:700;margin-bottom:22px;letter-spacing:.5px;line-height:1.16;text-shadow:0 2px 18px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.55)}
 .home-hero h1 em{color:var(--orange);font-style:normal}
 .home-hero p{font-size:20px;color:#dde1e7;margin-bottom:32px;max-width:560px}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
@@ -266,7 +266,7 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
   background:linear-gradient(transparent,rgba(0,0,0,.82));
   font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.8px;font-size:15px;
 }
-.gal-item .cap small{display:block;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;color:#cfd3da;font-size:13px;font-weight:400}
+.gal-item .cap small{display:block;font-family:'Bitter',Georgia,serif;text-transform:none;letter-spacing:0;color:#cfd3da;font-size:13px;font-weight:400}
 .gal-wide{grid-column:span 2}
 
 /* ---------- before / after pair ---------- */
@@ -276,7 +276,7 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .ba-tag{position:absolute;top:14px;left:14px;background:var(--charcoal);color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.5px;font-size:12px;font-weight:600;padding:6px 14px;border-radius:4px}
 .ba-tag.is-after{background:var(--orange)}
 .ba-caption{text-align:center;margin-top:22px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;font-size:18px;color:var(--charcoal)}
-.ba-caption small{display:block;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;color:var(--slate);font-size:14.5px;font-weight:400;margin-top:6px}
+.ba-caption small{display:block;font-family:'Bitter',Georgia,serif;text-transform:none;letter-spacing:0;color:var(--slate);font-size:14.5px;font-weight:400;margin-top:6px}
 @media(max-width:620px){.ba-pair{grid-template-columns:1fr}.ba-figure{height:300px}}
 
 /* ---------- testimonials ---------- */
@@ -286,7 +286,7 @@ p.body{font-size:16.5px;color:var(--slate);margin-bottom:18px}
 .stars .ic{width:19px;height:19px;color:var(--orange);fill:var(--orange);stroke:var(--orange)}
 .tst p{color:#3a3f49;margin-bottom:20px;font-size:16px;font-style:italic}
 .tst .who{font-family:'Oswald',sans-serif;font-weight:600;color:var(--charcoal);text-transform:uppercase;letter-spacing:.5px;font-size:16px}
-.tst .who small{display:block;font-family:'Inter',sans-serif;text-transform:none;font-weight:400;color:var(--slate-light);font-size:13.5px;letter-spacing:0;margin-top:2px}
+.tst .who small{display:block;font-family:'Oswald',sans-serif;text-transform:none;font-weight:400;color:var(--slate-light);font-size:13.5px;letter-spacing:0;margin-top:2px}
 
 /* ---------- location cards ---------- */
 .loc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:52px}
@@ -324,7 +324,7 @@ form.lead-form .sub{color:var(--slate);font-size:15px;margin-bottom:24px}
 .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px;font-family:'Oswald',sans-serif;letter-spacing:.6px;text-transform:uppercase}
 .field input,.field select,.field textarea{
   width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:7px;
-  font-family:'Inter',sans-serif;font-size:15px;background:#fff;color:var(--ink);transition:.18s;
+  font-family:'Oswald',sans-serif;font-size:15px;background:#fff;color:var(--ink);transition:.18s;
 }
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(233,83,31,.12)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
