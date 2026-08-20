@@ -4,6 +4,8 @@
 (function(){
   if(document.getElementById('bdc-launch')) return; // avoid double-load
   var AV='assets/bulldog-avatar.png';
+  // Lead delivery: paste the SAME Web3Forms access key used in contact.html here (replace the placeholder).
+  var W3KEY='YOUR_WEB3FORMS_ACCESS_KEY_HERE';
 
   var CSS=''+
   '#bdc-launch{position:fixed;bottom:24px;right:24px;width:64px;height:64px;border-radius:50%;background:#0d0d0d;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -8px rgba(20,25,35,.55);z-index:2147483000;transition:transform .18s,box-shadow .18s;border:none;padding:0}'+
@@ -59,13 +61,14 @@
   var started=false,mode='menu',lead={};
 
   // ===== APPROVED FACTS (placeholder — CONFIRM WITH EARL) =====
-  var MENU=[{k:'inspection',label:'Free inspection'},{k:'storm',label:'Storm / hail damage'},{k:'services',label:'Our services'},{k:'area',label:'Where you work'},{k:'talk',label:'Talk to someone'}];
+  var MENU=[{k:'inspection',label:'Free inspection'},{k:'storm',label:'Storm / hail damage'},{k:'services',label:'Our services'},{k:'warranty',label:'Our warranty'},{k:'area',label:'Where you work'},{k:'talk',label:'Talk to someone'}];
   var A={
     inspection:"We do free inspections and estimates — no cost, no pressure. Want us to reach out and set one up?",
     storm:"Storm and hail damage is what we do best. We inspect and document the damage, work with your insurance, and get your roof back to pre-storm condition. The inspection is free. Want us to take a look?",
     services:"We're a full-service general contractor: roofing, siding, storm restoration, remodels, utility buildings, and general contracting. What are you looking to get done?",
     area:"We're based in Burkburnett, TX and cover Wichita Falls plus communities across North Texas and Southern Oklahoma. Want us to reach out?",
-    talk:"Happy to help. You can call us at 844-569-DAWG, or leave your name and number and we'll reach out."
+    talk:"Happy to help. You can call us at 844-569-DAWG, or leave your name and number and we'll reach out.",
+    warranty:"We back our work with a 5-year labor warranty on our workmanship, on everything we touch. Want us to come take a look at your roof or siding?"
   };
 
   function scrollDown(){body.scrollTop=body.scrollHeight;}
@@ -84,12 +87,41 @@
     else if(k==='callnow'){try{window.location.href='tel:8445693294';}catch(e){} bot("Give us a call at 844-569-DAWG and we'll take care of you. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});}
   }
   function submitLead(){
-    // TODO: deliver lead to Big Dawgz. Wire to the same destination as the contact form (Web3Forms key) at launch.
-    try{console.log('BDC LEAD:',lead);}catch(e){}
+    try{
+      fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          access_key:W3KEY,
+          subject:'New lead from the Big Dawgz website chat',
+          from_name:'Big Dawgz Chat Assistant',
+          Name:lead.name||'',
+          Phone:lead.phone||'',
+          Source:'Website chat assistant'
+        })
+      });
+    }catch(e){}
+  }
+  // Logs a question the bot could not answer, so Earl can see what to add later.
+  function logQuestion(text){
+    try{
+      fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+          access_key:W3KEY,
+          subject:'Chat question from the Big Dawgz website',
+          from_name:'Big Dawgz Chat Log',
+          Question:text,
+          Note:'A visitor typed this into the site chat and the assistant did not have an answer. Use these to decide what to add.'
+        })
+      });
+    }catch(e){}
   }
   function freeText(text){
     if(mode==='ask_name'){lead.name=text;mode='ask_phone';bot("Thanks "+text+"! And the best phone number to reach you?");return;}
     if(mode==='ask_phone'){lead.phone=text;mode='done';submitLead();bot("Perfect — someone from Big Dawgz will reach out to you soon. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});return;}
+    logQuestion(text);
     bot("Good question! Let me connect you with the team so you get the right answer. Want a callback, or call us now?",function(){quick([{k:'leave',label:'Leave my number'},{k:'callnow',label:'Call 844-569-DAWG'}]);});
   }
   function onSend(){var v=input.value.trim();if(!v)return;input.value='';user(v);freeText(v);}
