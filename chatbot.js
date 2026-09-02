@@ -5,7 +5,7 @@
   if(document.getElementById('bdc-launch')) return; // avoid double-load
   var AV='assets/bulldog-avatar.png';
   // Lead delivery: paste the SAME Web3Forms access key used in contact.html here (replace the placeholder).
-  var W3KEY='07949642-f8c0-48e9-a212-52467c3910f4';
+  var W3KEY='5a27dd49-8cda-4769-b70d-919c0044fae3';
 
   var CSS=''+
   '#bdc-launch{position:fixed;bottom:24px;right:24px;width:64px;height:64px;border-radius:50%;background:#0d0d0d;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 14px 30px -8px rgba(20,25,35,.55);z-index:2147483000;transition:transform .18s,box-shadow .18s;border:none;padding:0}'+
