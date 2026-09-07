@@ -42,13 +42,29 @@
   '.bdc-foot input:focus{border-color:#E9531F}'+
   '.bdc-foot .send{width:38px;height:38px;border-radius:50%;flex:0 0 38px;background:#E9531F;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}'+
   '.bdc-foot .send svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}'+
-  '.bdc-disc{font-size:10.5px;text-align:center;padding:7px 10px;color:#9aa1ad;background:#f6f7f9}';
+  '.bdc-disc{font-size:10.5px;text-align:center;padding:7px 10px;color:#9aa1ad;background:#f6f7f9}'+
+  /* discoverability: label pill, one-time greeting bubble, first-load pulse */
+  '#bdc-label{position:fixed;bottom:36px;right:100px;height:40px;display:flex;align-items:center;padding:0 16px;background:#fff;color:#15171c;border:none;border-radius:22px;font-family:Oswald,sans-serif;font-weight:600;font-size:14px;letter-spacing:.4px;box-shadow:0 10px 26px -10px rgba(20,25,35,.45);cursor:pointer;z-index:2147483000;white-space:nowrap;transition:opacity .2s,transform .2s}'+
+  '#bdc-label:hover{transform:translateY(-1px)}'+
+  '#bdc-label .short{display:none}'+
+  '#bdc-teaser{position:fixed;bottom:100px;right:24px;max-width:270px;background:#fff;color:#20242c;border-radius:16px 16px 4px 16px;padding:14px 38px 14px 16px;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.45;box-shadow:0 18px 40px -16px rgba(20,25,35,.5);z-index:2147483000;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s,transform .25s}'+
+  '#bdc-teaser.show{opacity:1;transform:none;pointer-events:auto}'+
+  '#bdc-teaser:after{content:"";position:absolute;right:22px;bottom:-8px;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:9px solid #fff}'+
+  '#bdc-teaser p{margin:0;cursor:pointer}'+
+  '#bdc-teaser .bdc-teaser-x{position:absolute;top:6px;right:8px;width:24px;height:24px;border:none;background:transparent;color:#9aa1ad;font-size:18px;line-height:24px;cursor:pointer;padding:0}'+
+  '#bdc-teaser .bdc-teaser-x:hover{color:#20242c}'+
+  '.bdc-gone{display:none !important}'+
+  '#bdc-launch.pulse:before{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid rgba(233,83,31,.55);animation:bdcpulse 1.6s ease-out infinite}'+
+  '@keyframes bdcpulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}'+
+  '@media (max-width:640px){#bdc-label{right:96px;font-size:13px;padding:0 13px;height:38px;bottom:37px}#bdc-label .full{display:none}#bdc-label .short{display:inline}#bdc-teaser{max-width:230px;bottom:98px;font-size:13.5px}}';
 
   var style=document.createElement('style'); style.textContent=CSS; document.head.appendChild(style);
 
   var host=document.createElement('div');
   host.innerHTML=''+
   '<button id="bdc-launch" aria-label="Open chat"><img src="'+AV+'" alt=""><span class="bdc-x"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span></button>'+
+  '<button id="bdc-label" aria-label="Open chat"><span class="full">Questions? Chat with us</span><span class="short">Chat with us</span></button>'+
+  '<div id="bdc-teaser" role="status"><button class="bdc-teaser-x" aria-label="Dismiss">&times;</button><p>Got a question about your roof or a storm claim? Tap here, we can help.</p></div>'+
   '<div id="bdc-win" role="dialog" aria-label="Big Dawgz chat">'+
     '<div class="bdc-head"><span class="av"><img src="'+AV+'" alt=""></span><div><b>Big Dawgz Construction</b><small>Online now</small></div></div>'+
     '<div class="bdc-body" id="bdc-body"></div>'+
@@ -127,5 +143,39 @@
   function onSend(){var v=input.value.trim();if(!v)return;input.value='';user(v);freeText(v);}
   send.onclick=onSend;
   input.addEventListener('keydown',function(e){if(e.key==='Enter')onSend();});
-  launch.onclick=function(){var open=win.classList.toggle('show');launch.classList.toggle('open',open);if(open&&!started){started=true;bot("Hey! Thanks for stopping by Big Dawgz Construction. What can I help you with today?",showMenu);}};
+  // ===== DISCOVERABILITY: label pill + one-time greeting bubble + first-load pulse =====
+  var label=document.getElementById('bdc-label'),teaser=document.getElementById('bdc-teaser');
+  var LS='bdc-teaser-dismissed';
+  function lsGet(){try{return localStorage.getItem(LS);}catch(e){return null;}}
+  function lsSet(){try{localStorage.setItem(LS,'1');}catch(e){}}
+  function hideTeaser(){teaser.classList.remove('show');teaser.classList.add('bdc-gone');lsSet();}
+  function setOpen(open){
+    win.classList.toggle('show',open);
+    launch.classList.toggle('open',open);
+    launch.classList.remove('pulse');
+    if(open){
+      label.classList.add('bdc-gone');
+      hideTeaser();
+      if(!started){started=true;bot("Hey! Thanks for stopping by Big Dawgz Construction. What can I help you with today?",showMenu);}
+    } else {
+      label.classList.remove('bdc-gone');
+    }
+  }
+  launch.onclick=function(){setOpen(!win.classList.contains('show'));};
+  label.onclick=function(){setOpen(true);};
+  teaser.querySelector('p').onclick=function(){setOpen(true);};
+  teaser.querySelector('.bdc-teaser-x').onclick=function(e){e.stopPropagation();hideTeaser();};
+  // gentle pulse for the first few seconds so the icon reads as tappable
+  launch.classList.add('pulse');
+  setTimeout(function(){launch.classList.remove('pulse');},6500);
+  // greeting bubble: once per visitor, after a short delay; on phones it fades on its own so it never covers content for long
+  if(!lsGet()){
+    setTimeout(function(){
+      if(win.classList.contains('show')) return;
+      teaser.classList.add('show'); lsSet();
+      if(window.matchMedia&&window.matchMedia('(max-width:640px)').matches){
+        setTimeout(function(){teaser.classList.remove('show');},7000);
+      }
+    },4500);
+  }
 })();
