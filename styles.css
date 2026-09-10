@@ -400,3 +400,6 @@ form.lead-form .btn{width:100%;justify-content:center;border:none}
   .home-hero h1{font-size:clamp(30px,8vw,44px);line-height:1.12}
   .home-hero p{font-size:17px}
 }
+
+/* keep the bottom-bar text clear of the fixed chat widget */
+.foot-bottom{padding-bottom:92px}

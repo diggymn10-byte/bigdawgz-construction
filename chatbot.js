@@ -83,7 +83,7 @@
     storm:"Storm and hail damage is what we do best. We inspect and document the damage, work with your insurance, and get your roof back to pre-storm condition. The inspection is free. Want us to take a look?",
     services:"We're a full-service general contractor: roofing, siding, storm restoration, remodels, utility buildings, and general contracting. What are you looking to get done?",
     area:"We're based in Burkburnett, TX and cover Wichita Falls plus communities across North Texas and Southern Oklahoma. Want us to reach out?",
-    talk:"Happy to help. You can call us at 844-569-DAWG, or leave your name and number and we'll reach out.",
+    talk:"Happy to help. You can call us at 940-569-DAWG, or leave your name and number and we'll reach out.",
     warranty:"We back our work with a 5-year labor warranty on our workmanship, on everything we touch. Want us to come take a look at your roof or siding?"
   };
 
@@ -100,7 +100,7 @@
     });}
     else if(k==='menu'){bot("No problem — what else can I help with?",showMenu);}
     else if(k==='leave'){mode='ask_name';bot("Great! What's your name?");}
-    else if(k==='callnow'){try{window.location.href='tel:8445693294';}catch(e){} bot("Give us a call at 844-569-DAWG and we'll take care of you. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});}
+    else if(k==='callnow'){try{window.location.href='tel:9405693294';}catch(e){} bot("Give us a call at 940-569-DAWG and we'll take care of you. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});}
   }
   function submitLead(){
     try{
@@ -138,7 +138,7 @@
     if(mode==='ask_name'){lead.name=text;mode='ask_phone';bot("Thanks "+text+"! And the best phone number to reach you?");return;}
     if(mode==='ask_phone'){lead.phone=text;mode='done';submitLead();bot("Perfect — someone from Big Dawgz will reach out to you soon. Anything else I can help with?",function(){quick([{k:'menu',label:'Back to menu'}]);});return;}
     logQuestion(text);
-    bot("Good question! Let me connect you with the team so you get the right answer. Want a callback, or call us now?",function(){quick([{k:'leave',label:'Leave my number'},{k:'callnow',label:'Call 844-569-DAWG'}]);});
+    bot("Good question! Let me connect you with the team so you get the right answer. Want a callback, or call us now?",function(){quick([{k:'leave',label:'Leave my number'},{k:'callnow',label:'Call 940-569-DAWG'}]);});
   }
   function onSend(){var v=input.value.trim();if(!v)return;input.value='';user(v);freeText(v);}
   send.onclick=onSend;
