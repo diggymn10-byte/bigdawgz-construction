@@ -403,3 +403,8 @@ form.lead-form .btn{width:100%;justify-content:center;border:none}
 
 /* keep the bottom-bar text clear of the fixed chat widget */
 .foot-bottom{padding-bottom:92px}
+
+/* hero CTA row: three buttons (inspection / consultation / phone) must fit one line on desktop */
+.hero-actions .btn{padding:14px 20px;font-size:14px;letter-spacing:.6px}
+.hero-actions .btn svg{width:16px;height:16px}
+@media(max-width:900px){.hero-actions .btn{padding:15px 24px;font-size:15px;letter-spacing:1px}}
