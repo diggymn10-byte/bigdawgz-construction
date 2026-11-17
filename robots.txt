@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.teambigdawgz.com/sitemap.xml
+Sitemap: https://www.bigdawgzconstruction.com/sitemap.xml
